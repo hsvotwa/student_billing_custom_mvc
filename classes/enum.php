@@ -14,9 +14,23 @@
         const inactive = 2;
     }
 
+    final class EnumStudentStatus {
+        const applied = 0;
+        const active = 1;
+        const inactive = 2;
+    }
+
     final class EnumYesNo {
         const no = 0;
         const yes = 1;
+    }
+
+    final class EnumUserRoleType {
+        const none = 0;
+        const guest = 1;
+        const student = 2;
+        const admin = 3;
+        const authenticated_user = 4;
     }
 
     final class EnumSqlQryType {
@@ -36,6 +50,12 @@
         const tbl_student = "tbl_student";
         const tbl_user = "tbl_user";
         const tbl_subject = "tbl_subject";
+        const tbl_lu_nav = "tbl_lu_nav";
+        const tbl_lu_user_type = "tbl_lu_user_type";
+        const tbl_lu_role_type = "tbl_lu_role_type";
+        const tbl_study_aid = "tbl_study_aid";
+        const tbl_student_subject = "tbl_student_subject";
+        const tbl_student_aid = "tbl_student_aid";
     }
 
     final class EnumMySqlColType {

@@ -21,16 +21,10 @@ class GeneralDisplay {
     }
 
     public function getCss() {
-        $echo = '<link rel="shortcut icon" href="' . WEBROOT . 'images/favicon.ico" type="image/x-icon" />';
-        $echo .= '<link rel="icon" href="' . WEBROOT . 'images/favicon.ico" type="image/x-icon" />';
-        if(Common::isLiveServer()) {
-            $echo .= $this->getCssRef( 'css/site.css' );
-        } else {
-            $echo .= $this->getCssRef( 'css/site.css' );
-        }
+        $echo = $this->getCssRef( 'css/site.css' );
         $echo .= $this->getCssRef('css/vendor/jquery-ui.css');
         $echo .= $this->getCssRef('css/vendor/toastr.min.css');
-        $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700" />';
+        $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />';
         return $echo;
     }
 
@@ -58,38 +52,15 @@ class GeneralDisplay {
         return '<script language="JavaScript" type="text/javascript" src="' . Common::getExistRefPath ( $path, true ) . '"></script>';
     }
 
-    private function chkNavAuth ( $nav_uuid ) {
-        $query = "select
-                    *
-                from " . EnumSqlTbl::tbl_lu_nav_role_access . "
-                where ( nav_uuid = '$nav_uuid' );";
-        $result = $this->getMySql()->getQryRlt ( $query );
-        if ( mysqli_num_rows ( $result ) == 0 ) {
-            return false;
-        }
-        while ( $row = mysqli_fetch_assoc ( $result ) ) {
-            if ( $row['role_id'] == EnumUserRoleType::none ) {
-                return UserSessionMdl::getUuid();
-            }
-            if( ! UserSessionMdl::getProfileId() ) {
-                return false;
-            }
-            if ( ( new UserMdl( UserSessionMdl::getUuid() ) )->hasAccessTo( $row['role_id'] ) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public function getNavigation() {
-        $query = "select * from tbl_lu_nav order by sequence";
+        $query = "select * from tbl_lu_nav order by sequence;";
         $result = $this->getMySql()->getQryRlt ( $query );
         if ( ! $result || ! mysqli_num_rows ( $result ) ) { 
             return ""; 
         }
         $nav_echo = '<div class="div_nav">';
         while ( $row = mysqli_fetch_assoc ( $result ) ) {
-            if ( $this->chkNavAuth( $row['uuid'] ) ) {
+            if ( ( new UserMdl( UserSessionMdl::getUuid() ) )->hasAccessTo( $row["user_type_id"] ) ) {
                 $nav_echo .= '<a href="' . APP_DOMAIN . $row['controller'] . '/' . $row["action"] . '">' . $row['name'] . '</a>';
             }
         }
@@ -102,7 +73,7 @@ class GeneralDisplay {
         return "<label class=\"form_label\">$description$indicator</label>";
     }
 
-    public function getHtmlDisplay($object, $field_name, $ref_table, $ref_column) {
+    public function getHtmlDisplay( $object, $field_name, $ref_table, $ref_column) {
         $value = $object && isset( $object[ $field_name ] ) ? $object[ $field_name ] : ""; 
         if( $ref_table ) {
             $this->resolveValue( $value, $ref_table, $ref_column );
@@ -298,87 +269,6 @@ class GeneralDisplay {
         return $echo . $echo_js;
     }
 
-    public function addAuditLog( $audit_trail_uuid ) {
-        $echo = "";
-        $query = "  select
-                        at.*,
-                        u.name,
-                        concat( u.name, ' ', u.surname ) as full_name
-                    from tbl_audit_trail at inner join tbl_user u on at.user_uuid = u.user_uuid
-                    where ( at.audit_trail_uuid = '$audit_trail_uuid' )
-                    order by at.created desc;";
-        $result = $this->getMySql()->getQryRlt ( $query );
-        if ( mysqli_num_rows ( $result ) == 0 ) {
-            return "No changes found";
-        }
-        while ( $row = mysqli_fetch_array ( $result ) ) {
-            $description = "";
-            switch ( true ) {
-                case  $row['single_value'] && $row['new_value']:
-                    $description = $row['description'] . ': ' . $this->getAuditLogValue( $row, 'new_value' ) . '.';
-                    break;
-                case  is_null ( $row['old_value'] ) && is_null ( $row['new_value'] ):
-                    $description = $row['description'] . '.';
-                    break;
-                case $row['old_value'] == "" && $row['new_value'] == "":
-                    $description = $row['description'] . '.';
-                    break;
-                case $row['old_value'] == "" && $row['new_value'] == "":
-                    $description = $row['description'] . '.';
-                    break;
-                case  ! is_null ( $row['old_value'] ):
-                    $description = $row['description'] . ' changed from ' . $this->getAuditLogValue( $row, 'old_value' ) . ' to ' . $this->getAuditLogValue( $row, 'new_value' ) . '.';
-                    break;
-                default:
-                    $description = $row['description'] . ' set to ' . $this->getAuditLogValue( $row, 'new_value' ) . '.';
-            }
-            $echo .= '<div class="div_chg_log_value">';
-            $echo .= ' <table class="tbl_chg_log">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <em>';
-            $echo .= '                   <font title="' . $row['full_name'] . '">' . $row['name'] . '</font> @ <font>' . Convert::toDate ( $row['created'], false, false ) . '</font>';
-            $echo .= '               </em>
-                            </td>
-                        </tr>
-                        <tr>';
-            $echo .= '            <td>' . $description . '</font>';
-            $echo .= '            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>';
-        }
-        return $echo;
-    }
-
-    public function getAuditLogValue( $row, $field ) {
-        if ( is_null ( $row['table_ref_name'] ) ) {
-            return $row[$field];
-        }
-        if ( is_numeric( $row[$field] ) ) {
-            $query = "select
-                            " . FieldMdl::deterRefDisplayCol( $row['table_ref_name'] ) . " name
-                        from " . $row['table_ref_name'] . "
-                        where ( Enum_id=" . $row[$field] . " );";
-        } else {
-                $query = "select
-                            " . FieldMdl::deterRefDisplayCol( $row['table_ref_name'] ) . " name
-                        from " . $row['table_ref_name'] . "
-                        where (uuid='". $row[$field] . "' );";
-        }
-        $result = $this->getMySql()->getQryRlt ( $query );
-        if ( $result && mysqli_num_rows ( $result) && mysqli_num_rows ( $result ) == 1 ) {
-            $row_1 = mysqli_fetch_array ( $result );
-            return $row_1['name'];
-        }
-        if ( $row[$field] == '0' ) {
-            return 'default (-- select --)';
-        }
-        return $row[$field];
-    }
-
     public function getContUuid( $is_id = false, $table_name = '', $name = "uuid" ) {
          if ( ! Common::isGetFieldEmpty ( $name ) ) {
              if ( ! $is_id ) {
@@ -414,7 +304,7 @@ class GeneralDisplay {
         $data = array();
         $data["success"] = $success;
         $data["title"] = $new_title;
-        if( ! is_null( $messages ) ) {
+        if( ! is_null( $messages ) && $messages ) {
             if( ! is_array( $messages ) && $messages != "" ) {
                 $data["message"] = $messages;
             } else if ( ! empty ( $messages ) ) {
@@ -428,6 +318,8 @@ class GeneralDisplay {
             }
         } else if( ! $success ) {
             $data["message"] = "Data was not saved.";
+        } else {
+            $data["message"] = "Data successfully saved.";
         }
         return json_encode( $data );
    }

@@ -31,13 +31,18 @@ var httpHandler = function(http_url, _type, _model, callBack, extra, showError, 
                             if (callBack !== null) {
                                 callBack(response);
                             }
+                            toastr.success(response.message, "Success");
+                            return;
                         } else if (typeof(message_field) !== "undefined") {
                             $("#" + message_field).html(response.message);
                             setTimeout(function() {
                                 $("#" + message_field).html('');
                             }, 8000);
+                            toastr.error(response.message, "Error");
                             return;
                         }
+                        toastr.error(response.message, "Error");
+                        return;
                     } else if (response.success) {
                         if (callBack !== null) {
                             callBack(response);
@@ -61,7 +66,7 @@ var httpHandler = function(http_url, _type, _model, callBack, extra, showError, 
                     $("#nav-div-prog").fadeOut();
                     showError = showError === null ? true : showError;
                     if (showError) {
-                        // toastr.error("Something went wrong. Please retry.", "Error");
+                        toastr.error("Something went wrong. Please retry.", "Error");
                     }
                 });
             break;
@@ -72,7 +77,7 @@ var httpHandler = function(http_url, _type, _model, callBack, extra, showError, 
                     try {
                         var json = $.parseJSON(input);
                         if (typeof(json.message) !== 'undefined') {
-                            // toastr.error(json.message, "Error");
+                            toastr.error(json.message, "Error");
                             if (callBack !== null) {
                                 callBack(json.message);
                             }
@@ -88,7 +93,7 @@ var httpHandler = function(http_url, _type, _model, callBack, extra, showError, 
                     $("#nav-div-prog").fadeOut();
                     showError = showError === null ? true : showError;
                     if (showError) {
-                        // toastr.error("Something went wrong. Please retry.", "Error");
+                        toastr.error("Something went wrong. Please retry.", "Error");
                     }
                 });
     }
@@ -411,18 +416,10 @@ function closeDialogue(_id) {
 }
 
 function getBaseUrl() {
-    if (window.location.href.indexOf("bc_student_man") > -1) {
-        return "bc_student_man/";
-    }
-    return "";
-}
-
-function loadAuditTrail() {
-    // $("#div_chg_log").html("Retrieving changes. Please stand by...");
-    httpHandler("/" + getBaseUrl() + "audit/list/" + $("#uuid").val(), "get", null,
-        function(html) {
-            $("#div_chg_log").html(html);
-        }, null, false);
+    // if ( window.location.href.indexOf("account") > -1) {
+    //     return "trustco1/";
+    // }
+    return "trustco1/";
 }
 
 function focusField(field_name) {
@@ -436,64 +433,6 @@ function validCompulsory(field, fields) {
         return false;
     }
     $("#" + field).removeClass("input-validation-error");
-    return true;
-}
-
-function isPast(check_field, notify, field_description) {
-    try {
-        if ($('#' + check_field).val() == "") {
-            return true;
-        }
-        var parts = null;
-        var today_date = new Date();
-        var benchmark = new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate());
-        var parts = null;
-        if (typeof(notify) === 'undefined') {
-            notify = false;
-        }
-        if (typeof(field_description) === 'undefined') {
-            field_description = 'Date';
-        }
-        var check_date = $('#' + check_field).val();
-        parts = check_date.split("/");
-        var check_date = new Date(parts[2], parts[1] - 1, parts[0]);
-        var return_val = check_date < benchmark;
-        if (notify && !return_val) {
-            $('#' + check_field).addClass("input-validation-error");
-        }
-        if (!return_val) {
-            $('#' + check_field).focus();
-        }
-        return return_val;
-    } catch (e) {}
-    return true;
-}
-
-function isFuture(check_field, notify, field_description) {
-    try {
-        if ($('#' + check_field).val() == "") {
-            return true;
-        }
-        var parts = null;
-        var today_date = new Date();
-        var benchmark = new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate());
-        var parts = null;
-        if (typeof(notify) === 'undefined') {
-            notify = false;
-        }
-        if (typeof(field_description) === 'undefined') {
-            field_description = 'Date';
-        }
-        var check_date = $('#' + check_field).val();
-        parts = check_date.split("/");
-        var check_date = new Date(parts[2], parts[1] - 1, parts[0]);
-        var return_val = check_date > benchmark;
-        if (notify && !return_val) {
-            $('#' + check_field).addClass("input-validation-error");
-            // toastr.error(field_description + " must be in the future.");
-        }
-        return return_val;
-    } catch (e) {}
     return true;
 }
 
