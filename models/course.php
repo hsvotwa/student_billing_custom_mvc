@@ -34,10 +34,10 @@ class CourseMdl extends BaseMdl {
             "name", "name", "Name", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text", $this->g_row
         );
         $return["department_uuid"] = new FieldMdl( 
-            "department_uuid", "department_uuid", "Department", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text telephone_number_field", $this->g_row, null, 2, null, LookupData::getDepartmentList(), 6
+            "department_uuid", "department_uuid", "Department", true, EnumFieldDataType::_string, EnumFieldType::_select, $this->g_sql_table, true, "text telephone_number_field", $this->g_row, null, 2, LookupData::getDepartmentList(), "", 6
         );
         $return["status_id"] = new FieldMdl( 
-            "status_id", "status_id", "Status", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text", $this->g_row, null, 2, null, LookupData::getStatusList(), 0, false
+            "status_id", "status_id", "Status", true, EnumFieldDataType::_string, EnumFieldType::_select, $this->g_sql_table, true, "text", $this->g_row, null, 2, LookupData::getStatusList(), "", 0, false
         );
         $this->g_fields = $return;
         return $this->g_fields;

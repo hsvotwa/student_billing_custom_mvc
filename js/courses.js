@@ -18,7 +18,7 @@ $(function() {
 });
 
 function refresh() {
-    httpHandler("/" + getBaseUrl() + "aids/list/" + $("#search").val(), "get", null,
+    httpHandler("/" + getBaseUrl() + "courses/list/" + $("#search").val(), "get", null,
         function(html) {
             $("#record_list").html(html);
             $("#refresh_link").removeClass('url_orange');

@@ -4,10 +4,10 @@
             <div class="div_filter">
                 <?php 
                     if( $can_edit ) {
-                        echo '<a href="' . APP_DOMAIN . 'occupant/create/" class="button">New</a>';
+                        echo '<a href="' . APP_DOMAIN . 'course/create/" class="button">New</a>';
                     }
                 ?>
-                <input type="search" name="search" id="search" class="text" placeholder="Search occupant(s)..." />&nbsp;
+                <input type="search" name="search" id="search" class="text" placeholder="Search course(s)..." />&nbsp;
                 <a href="#" class="url" id="refresh_link">refresh</a>
             </div>
             <table class="tbl_cont_data tbl_cont_data_filter" id="record_list">
@@ -17,5 +17,5 @@
     </tr>
 </table>
 <?php
-    echo $gen->getJavascriptRef('js/occupants.js')
+    echo $gen->getJavascriptRef('js/courses.js')
 ?>

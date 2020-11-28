@@ -42,7 +42,6 @@
                 $logo_path = APP_DOMAIN . "/images/logo.png";
                 $loader_path = APP_DOMAIN . "/images/ball.gif";
                 $selected_profile = APP_NAME;
-                $user_detail = ! UserSessionMdl::getUuid() ?  "" : UserSessionMdl::getName() . " " . UserSessionMdl::getSurname();
                 require( ROOT . "views/layouts/" . $this->g_layout . '.php' );
             }
         }

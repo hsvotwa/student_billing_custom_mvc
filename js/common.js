@@ -301,13 +301,6 @@ function loadSelectOptions(model, name) {
     }
 }
 
-
-function genericGetAuditTrail(link_uuid, content_div) {
-    httpHandler(base_url() + "/AuditTrail/get-audit-trail/" + link_uuid, "get", null, function(data) {
-        $('#' + content_div).html(data);
-    }, null, false);
-}
-
 function downloadFileFromPath(path, name) {
     var link = document.createElement('a');
     link.href = path;
@@ -317,68 +310,6 @@ function downloadFileFromPath(path, name) {
 
 function openDialog(id) {
     $('#' + id).dialog('open');
-}
-
-function postFormAndFile(url, field, other_data, form_name, success_callback, message_field) {
-    var file_upload = $("#" + field).get(0);
-    var files = file_upload.files;
-    var file_data = new FormData();
-    $("input, textarea, select", form_name).each(function() {
-        var field_name = $(this).attr('name');
-        file_data.append(field_name, $(this).val());
-    });
-
-    if (other_data !== null) {
-        // for (var item_key of Object.keys(other_data)) {
-        //     file_data.append(item_key, other_data[item_key]);
-        // }
-        Object.keys(other_data).forEach(function(item, index) {
-            file_data.append(item, other_data[item]);
-        });
-    }
-    for (var i = 0; i < files.length; i++) {
-        file_data.append("document", files[i]);
-    }
-    $.ajax({
-        url: url,
-        type: "POST",
-        contentType: false,
-        processData: false,
-        data: file_data,
-        success: function(data) {
-            var response = data;
-            response = JSON.parse(response);
-            if (typeof(response.message) !== "undefined") {
-                if (response.success) {
-                    if (success_callback !== null) {
-                        success_callback(response);
-                    }
-                } else if (typeof(message_field) !== "undefined") {
-                    $("#" + message_field).html(response.message);
-                    setTimeout(function() {
-                        $("#" + message_field).html('');
-                    }, 8000);
-                    return;
-                }
-            } else if (response.success) {
-                if (success_callback !== null) {
-                    success_callback(response);
-                }
-            }
-            if (response.Message !== "") {
-                if (success_callback !== null) {
-                    success_callback(response);
-                }
-                return;
-            }
-        },
-        error: function(data) {
-            var response = data;
-            if (response.Message !== "") {
-                return;
-            }
-        }
-    });
 }
 
 function inArray(needle, haystack) {
@@ -416,10 +347,7 @@ function closeDialogue(_id) {
 }
 
 function getBaseUrl() {
-    // if ( window.location.href.indexOf("account") > -1) {
-    //     return "trustco1/";
-    // }
-    return "trustco1/";
+    return "trustco2/";
 }
 
 function focusField(field_name) {

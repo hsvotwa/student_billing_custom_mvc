@@ -87,22 +87,6 @@
                     $this->g_additional_sql )
                 );
         }
-    
-        public function trackChange ( $uuid ) {
-            $audit_trail = new AuditTrail(
-                                            UserSessionMdl::getUuid(),
-                                            $uuid,
-                                            $this->g_fields
-                                        );
-            $audit_trail->setMySQL ( $this->getMySql() );
-            if ( $this->g_row ) {
-                $audit_trail->setCompResult ( $this->g_row );
-            } else {
-                $audit_trail->setNew( true );
-            }
-            $audit_trail->setAuditUuid ( $uuid );
-            return $audit_trail->trackChanges();
-        }
 
         public function validField() {
             if ( ! is_array ( $this->g_fields ) ) {

@@ -9,7 +9,7 @@ class CoursesController extends BaseController {
         $this->render( "manage", $mgr->getRecordPageTitle() );
     }
 
-    function list( $search_text ) {
+    function list( $search_text = "") {
         $this->g_can_edit = true;
         $model = new CourseMgr( "", $search_text );
         $this->g_layout = null;

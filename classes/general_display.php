@@ -210,7 +210,7 @@ class GeneralDisplay {
                     if ( ! is_null ( $field->g_list_source ) ) {
                         mysqli_data_seek( $field->g_list_source, 0 );
                     }
-                } else if ( ! is_null ( $field->g_list_source ) ) {
+                } else if ( ! is_null ( $field->g_list_source ) && $field->g_list_source ) {
                     foreach ( $field->g_list_source as $option ) {
                         $echo .= '<option value="' . (string) $option['value'] . '"' . ( $option['value'] != $value ? '' : ' selected' ) . '>';
                         $echo .= $option['name'];
