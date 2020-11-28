@@ -3,7 +3,7 @@ class StudentMdl extends BaseMdl {
     public function __construct ( $id = null, $check_profile = true ) {
         $this->g_id = $id;
         $this->g_entity_name = "Student";
-        $this->g_sql_table = EnumSqlTbl::tbl_student;
+        $this->g_sql_table = "tbl_student";
         $this->g_retrieve_query = $this->getRetrieveQuery( $check_profile );
         $this->g_fields = $this->g_invalid_fields = $this->g_errors = array ();
         if ( $id ) {

@@ -46,18 +46,6 @@
         const uuid = 2;
     }
 
-    final class EnumSqlTbl {
-        const tbl_student = "tbl_student";
-        const tbl_user = "tbl_user";
-        const tbl_subject = "tbl_subject";
-        const tbl_lu_nav = "tbl_lu_nav";
-        const tbl_lu_user_type = "tbl_lu_user_type";
-        const tbl_lu_role_type = "tbl_lu_role_type";
-        const tbl_study_aid = "tbl_study_aid";
-        const tbl_student_subject = "tbl_student_subject";
-        const tbl_student_aid = "tbl_student_aid";
-    }
-
     final class EnumMySqlColType {
         const tinyint = 1;
         const smallint = 2;

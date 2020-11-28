@@ -52,239 +52,32 @@ function handleAllNavigation ( $delete_existing = true ) {
   $mysql = new MySql();
   if ( $delete_existing ) {
     $queries = [
-      "delete from " . EnumSqlTbl::tbl_lu_nav . ";"
+      "delete from tbl_lu_nav;"
     ];
     $mysql->getQueryResult ( $queries );
   }
   $uuid = '';
   $sequence = 0;
   $return = true;
-  $return && $return = handleNavigation( 'Students', 'students', 'manage', ++$sequence, EnumUserRoleType::admin, $uuid );
-  $return && $return = handleNavigation( 'Users', 'users', 'manage', ++ $sequence, EnumUserRoleType::admin, $uuid );
-  $return && $return = handleNavigation( 'Subjects', 'subjects', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Study Aids', 'aids', 'manage', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Apply', 'student', 'apply', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Quotation', 'quotation', 'enquire', ++$sequence, EnumUserRoleType::none, $uuid );
-  $return && $return = handleNavigation( 'Statement', 'statement', 'detail', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
-  $return && $return = handleNavigation ( 'Log out', 'account', 'logout', ++$sequence, EnumUserRoleType::authenticated_user, $uuid );
-  $return && $return = handleNavigation ( 'Log in', 'account', 'login', ++$sequence, EnumUserRoleType::none, $uuid );
+  $return && $return = handleNavigation( 'Students', 'students', 'manage', ++$sequence, $uuid );
+  $return && $return = handleNavigation( 'Department', 'departments', 'manage', ++$sequence, $uuid );
+  $return && $return = handleNavigation( 'Courses', 'courses', 'manage', ++ $sequence, $uuid );
+  $return && $return = handleNavigation( 'Subjects', 'subjects', 'manage', ++$sequence, $uuid );
+  $return && $return = handleNavigation( 'Lecturer', 'lecturers', 'manage', ++$sequence, $uuid );
+  $return && $return = handleNavigation( 'Transaction', 'transactions', 'manage', ++$sequence, $uuid );
+  $return && $return = handleNavigation( 'Log out', 'account', 'logout', ++$sequence, $uuid );
   return $return;
 }
 
 function handleAllLookupData() {
   $mysql = new MySql();
-  //Role type
-  $table = EnumSqlTbl::tbl_lu_user_type;
-  handleLookupData ( $table, EnumUserRoleType::none, 'None');
-  handleLookupData ( $table, EnumUserRoleType::guest, 'Guest');
-  handleLookupData ( $table, EnumUserRoleType::student, 'Student');
-  handleLookupData ( $table, EnumUserRoleType::admin, 'Admin');
-
-  //Subjects
-  $table = EnumSqlTbl::tbl_subject;
-  $enum_val = 1;
-  $subjects = [
-    array(
-      "id" => $enum_val ++,
-      "code" => "DSA001",
-      "name" => "Data Structures and Algorithms Beginner",
-      "image_name" => "dsa001.png",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DMA001",
-      "name" => "Discrete Mathematics Beginner",
-      "image_name" => "dma001.jpg",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "WDE001",
-      "name" => "Web Development Beginner",
-      "image_name" => "wdf001.png",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DSA002",
-      "name" => "Data Structures and Algorithms Intermediate",
-      "image_name" => "dsa001.png",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DMA002",
-      "name" => "Discrete Mathematics Intermediate",
-      "image_name" => "dma001.jpg",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "WDE002",
-      "name" => "Web Development Intermediate",
-      "image_name" => "wdf001.png",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DSA003",
-      "name" => "Data Structures and Algorithms Advanced",
-      "image_name" => "dsa001.png",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DMA003",
-      "name" => "Discrete Mathematics Advanced",
-      "image_name" => "dma001.jpg",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "WDE003",
-      "name" => "Web Development Advanced",
-      "image_name" => "wdf001.png" ,
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DSA004",
-      "name" => "Data Structures and Algorithms Expert",
-      "image_name" => "dsa001.png",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "DMA004",
-      "name" => "Discrete Mathematics Expert",
-      "image_name" => "dma001.jpg",
-      "cost" => 1000.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "WDE004",
-      "name" => "Web Development Expert",
-      "image_name" => "wdf001.png" ,
-      "cost" => 1000.00
-    )
-  ];
-  $queries = array();
-  foreach( $subjects as $subject ) {
-    $qry = "select *
-              from {$table}
-              where ( id = '" . $subject["id"] . "' );";
-    $result = $mysql->getQueryResult ( $qry );
-    if ( ! $result || ! $mysql->getQueryResult ( $qry )->num_rows ) {
-        $qry = "insert into {$table}
-                  set id = '" . $subject["id"] . "',
-                  code = '" . $subject["code"] . "',
-                  name = '" . $subject["name"] . "',
-                  image_name = '" . $subject["image_name"] . "',
-                  cost = '" . $subject["cost"] . "',
-                  created = now(),
-                  last_modified = now(); ";
-         $mysql->getQueryResult ( $qry );
-         continue;
-    }
-    $qry = "update {$table}
-              set id = '" . $subject["id"] . "',
-              code = '" . $subject["code"] . "',
-              name = '" . $subject["name"] . "',
-              image_name = '" . $subject["image_name"] . "',
-              cost = '" . $subject["cost"] . "',
-              last_modified = now()
-            where id = '" . $subject["id"] . ";" ;
-  }
-  //Study Aids
-  $table = EnumSqlTbl::tbl_study_aid;
-  $enum_val = 1;
-  $study_aids = [
-    array(
-      "id" => $enum_val ++,
-      "code" => "LAP001",
-      "name" => "Laptop - MacBook Pro 2020",
-      "image_name" => "macbookpro.png",
-      "cost" => 24234.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "LAP002",
-      "name" => "Laptop - Dell Inspiron 2020",
-      "image_name" => "dellinspiron.png",
-      "cost" => 14634.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "TAB001",
-      "name" => "Tablet - Galaxy Tab A 2020",
-      "image_name" => "galaxytaba.png",
-      "cost" => 9675.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "TAB002",
-      "name" => "Tablet - iPad Pro 2020",
-      "image_name" => "ipadpro.png",
-      "cost" => 18999.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "LAP003",
-      "name" => "Laptop - MacBook Pro 2021",
-      "image_name" => "macbookpro.png",
-      "cost" => 24234.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "LAP004",
-      "name" => "Laptop - Dell Inspiron 2021",
-      "image_name" => "dellinspiron.png",
-      "cost" => 18634.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "TAB003",
-      "name" => "Tablet - Galaxy Tab A 2021",
-      "image_name" => "galaxytaba.png",
-      "cost" => 12675.00
-    ),
-    array(
-      "id" => $enum_val ++,
-      "code" => "TAB004",
-      "name" => "Tablet - iPad Pro 2021",
-      "image_name" => "ipadpro.png",
-      "cost" => 20999.00
-    )
-  ];
-  foreach( $study_aids as $study_aid ) {
-    $qry = "select *
-              from {$table}
-              where ( id = '" . $study_aid["id"] . "' );";
-    $result = $mysql->getQueryResult ( $qry );
-    if ( ! $result || ! $mysql->getQueryResult ( $qry )->num_rows ) {
-        $qry = "insert into {$table}
-                  set id = '" . $study_aid["id"] . "',
-                  code = '" . $study_aid["code"] . "',
-                  name = '" . $study_aid["name"] . "',
-                  image_name = '" . $study_aid["image_name"] . "',
-                  cost = '" . $study_aid["cost"] . "',
-                  created = now(),
-                  last_modified = now(); ";
-        $mysql->getQueryResult ( $qry );
-        continue;
-    }
-    $qry = "update {$table}
-              set id = '" . $study_aid["id"] . "',
-              code = '" . $study_aid["code"] . "',
-              name = '" . $study_aid["name"] . "',
-              image_name = '" . $study_aid["image_name"] . "',
-              cost = '" . $study_aid["cost"] . "',
-              last_modified = now()
-            where id = '" . $study_aid["id"] . ";" ;
-  }
-  $queries[] = $qry;
-  return $mysql->getQueryResult ( $queries );
+  $table = "tbl_lu_status";
+  $return = true;
+  $return && $return = handleLookupData ( $table, EnumStatus::active, "Active" );
+  $return && $return = handleLookupData ( $table, EnumStatus::inactive, "Inactive" );
+  return $return;
+  // $queries[] = $qry;
+  // return $mysql->getQueryResult ( $queries );
 }
 
 function handleAllColumnRename() {
@@ -318,18 +111,26 @@ function handleOtherScript() {
 
 function handleAllTableStructure() {
   $return = true;
-  $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_lu_user_type ) )
-                  ->addColumn( /*$name = */'enum_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
-                  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
+  $db_tbl = ( new MySqlTable( "tbl_lu_status") )
+  ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
   if ( ! $db_tbl->handle() ) {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;
   }
-   $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_study_aid ) )
-                  ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/true )
+  $db_tbl = ( new MySqlTable( "tbl_department" ) )
+              ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+              ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
+              ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
+              ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
+  if ( ! $db_tbl->handle() ) {
+    echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+    $return = false;
+  }
+  $db_tbl = ( new MySqlTable( "tbl_subject" ) )
+                  ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'code', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'image_name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
@@ -337,34 +138,46 @@ function handleAllTableStructure() {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;
   }
-  $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_subject ) )
-                  ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+  $db_tbl = ( new MySqlTable( "tbl_course" ) )
+                  ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'code', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'image_name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'department_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'status_id', EnumMySqlColType::tinyint, /*$len = */50, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
   if ( ! $db_tbl->handle() ) {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;
   }
-  $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_lu_nav ) )
+   $db_tbl = ( new MySqlTable( "tbl_course_subject_lecturer" ) )
+                  ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+                  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'course_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'subject_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                  ->addColumn( /*$name = */'lecturer_id', EnumMySqlColType::tinyint, /*$len = */50, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
+                  ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
+                  ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
+  if ( ! $db_tbl->handle() ) {
+    echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+    $return = false;
+  }
+  $db_tbl = ( new MySqlTable( "tbl_lu_nav" ) )
                   ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/true )
                   ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'controller', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'action', EnumMySqlColType::varchar, /*$len = */100, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'sequence', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
-                  ->addColumn( /*$name = */'user_type_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index );
+                  ->addColumn( /*$name = */'sequence', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index );
   if ( ! $db_tbl->handle() ) {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;
   }
-  $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student ) )
+  $db_tbl = ( new MySqlTable( "tbl_student" ) )
                   ->addColumn( /*$name = */'id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/true )
                   ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
-                  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */false)
+                  ->addColumn( /*$name = */'title', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */false)
+                  ->addColumn( /*$name = */'first_name', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */false)
+                  ->addColumn( /*$name = */'surname', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */false)
                   ->addColumn( /*$name = */'tel_no', EnumMySqlColType::varchar, /*$len = */30, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                   ->addColumn( /*$name = */'email', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                   ->addColumn( /*$name = */'student_no', EnumMySqlColType::varchar, /*$len = */20, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
@@ -375,10 +188,11 @@ function handleAllTableStructure() {
       echo "Could not create/alter table: {$db_tbl->getName()} </br>";
       $return = false;
     }
-    $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student_subject ) )
+    $db_tbl = ( new MySqlTable( "tbl_student_course" ) )
                 ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
                 ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true )
-                ->addColumn( /*$name = */'subject_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'course_uuid', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'course_cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
                 ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                 ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                 ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
@@ -386,10 +200,11 @@ function handleAllTableStructure() {
       echo "Could not create/alter table: {$db_tbl->getName()} </br>";
       $return = false;
     }
-     $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_student_aid ) )
+     $db_tbl = ( new MySqlTable( "tbl_student_course_transaction" ) )
                 ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
                 ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true )
-                ->addColumn( /*$name = */'aid_id', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'amount', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
+                ->addColumn( /*$name = */'date', EnumMySqlColType::date_time )
                 ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                 ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                 ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
@@ -397,14 +212,23 @@ function handleAllTableStructure() {
       echo "Could not create/alter table: {$db_tbl->getName()} </br>";
       $return = false;
     }
-    $db_tbl = ( new MySqlTable( EnumSqlTbl::tbl_user ) )
+    $db_tbl = ( new MySqlTable( "tbl_user" ) )
                 ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
-                ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true, EnumMySqlIndexType::uniq )
                 ->addColumn( /*$name = */'email', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
                 ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
                 ->addColumn( /*$name = */'surname', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
                 ->addColumn( /*$name = */'status_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
-                ->addColumn( /*$name = */'user_type_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
+                ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
+                ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
+    if ( ! $db_tbl->handle() ) {
+      echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+      $return = false;
+    }
+    $db_tbl = ( new MySqlTable( "tbl_lecturer" ) )
+                ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
+                ->addColumn( /*$name = */'department_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'full_name', EnumMySqlColType::varchar, /*$len = */200, /*$def = */null, /*$allow_null = */true )
+                ->addColumn( /*$name = */'status_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                 ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                 ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
     if ( ! $db_tbl->handle() ) {

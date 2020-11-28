@@ -6,7 +6,7 @@ class studentMdl extends BaseMdl {
         $this->g_id = $id;
         $this->g_current_unit_count = 0;
         $this->g_entity_name = "student";
-        $this->g_sql_table = EnumSqlTbl::tbl_student;
+        $this->g_sql_table = "tbl_student";
         $this->g_retrieve_query = $this->getRetrieveQuery();
         $this->g_fields = $this->g_invalid_fields = $this->g_errors = array ();
         $this->setAddtionalSqlField();

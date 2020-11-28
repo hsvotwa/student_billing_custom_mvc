@@ -22,14 +22,14 @@ if ( Common::isLiveServer() ) {
 	define ( 'MYSQL_HOST', 'localhost' );
 	define ( 'MYSQL_USR', 'root' );
 	define ( 'MYSQL_PWD', '' );
-	define ( 'MYSQL_DB', 'trustco_education1' );
+	define ( 'MYSQL_DB', 'trustco_education2' );
 	define( 'APP_DOMAIN', 'http://173/' );
 }  else {
 	define ( 'MYSQL_HOST', 'localhost' );
     define ( 'MYSQL_USR', 'hope' );
     define ( 'MYSQL_PWD', 'geekS@#5214' );
-    define ( 'MYSQL_DB', 'trustco1' );
-	define('APP_DOMAIN', 'http://localhost/trustco1/');
+    define ( 'MYSQL_DB', 'trustco2' );
+	define('APP_DOMAIN', 'http://localhost/trustco2/');
 }
 //SMTP
 define ( 'SMTP_DEBUG', false );

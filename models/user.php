@@ -3,7 +3,7 @@ class UserMdl extends BaseMdl {
     public function __construct ( $id = null, $check_profile = true ) {
         $this->g_id = $id;
         $this->g_entity_name = "User";
-        $this->g_sql_table = EnumSqlTbl::tbl_user;
+        $this->g_sql_table = "tbl_user";
         $this->g_retrieve_query = $this->getRetrieveQuery( $check_profile );
         $this->g_fields = $this->g_invalid_fields = $this->g_errors = array ();
         if ( $id ) {
@@ -64,7 +64,7 @@ class UserMdl extends BaseMdl {
             "surname", "surname", "Surname", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text", $this->g_row
         );
         $return["role_type_id"] = new FieldMdl( 
-            "role_type_id", "role_type_id", "Role type", true, EnumFieldDataType::_integer, EnumFieldType::_radiobutton, $this->g_sql_table, true, "d-block no_italic", $this->g_row, EnumSqlTbl::tbl_lu_role_type, 2, LookupData::getRoleTypeList()
+            "role_type_id", "role_type_id", "Role type", true, EnumFieldDataType::_integer, EnumFieldType::_radiobutton, $this->g_sql_table, true, "d-block no_italic", $this->g_row, "tbl_lu_role_type", 2, LookupData::getRoleTypeList()
         );
         $this->g_fields = $return;
         return $this->g_fields;

@@ -64,9 +64,9 @@ class FieldMdl {
             return "";
         }
         switch( $this->g_mysql_ref_tbl ) {
-            case EnumSqlTbl::tbl_lu_role_type:
+            case "tbl_lu_role_type":
                 return "enum_id";
-            case EnumSqlTbl::tbl_user:
+            case "tbl_user":
                 return "uuid";
         } 
         return "uuid";
@@ -75,12 +75,6 @@ class FieldMdl {
     public static function deterRefDisplayCol( $table_name ) {
         if( ! $table_name ) {
             return "";
-        }
-        switch( $table_name ) {
-            case EnumSqlTbl::tbl_lu_role_type:
-                return "name";
-            case EnumSqlTbl::tbl_user:
-                return "name";
         }
         return "name";
     }

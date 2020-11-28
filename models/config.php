@@ -3,7 +3,7 @@ class ConfigMdl extends BaseMdl {
     public $g_config_values = null;
 
     public function __construct ( $enum_ids ) {
-        $this->g_sql_table = EnumSqlTbl::tbl_config;
+        $this->g_sql_table = "tbl_config";
         $this->g_retrieve_query = $this->getRetrieveQuery( $enum_ids );
         if ( ! is_array( $enum_ids ) ) {
             $enum_ids = array( $enum_ids );
