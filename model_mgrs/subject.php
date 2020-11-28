@@ -11,4 +11,10 @@ class SubjectMgr extends BaseMgr {
                  where name like '%" . $search_text . "%' or code like '%" . $search_text . "%'
                  order by code";
     }
+
+    function validName( $name, $uuid ) {
+        $query = "select * from tbl_subject where name = '$name' and uuid != '$uuid';";
+        $data = $this->getMySql()->getQueryResult( $query );
+       return ! $data || ! $data->num_rows;
+    }
 }

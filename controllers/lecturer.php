@@ -1,19 +1,19 @@
 <?php
-class StudentController extends BaseController {
+class LecturerController extends BaseController {
     public function __construct () {
     }
 
     function create() {
-        $model = new StudentMdl();
+        $model = new LecturerMdl();
         $this->g_form_fields = $model->getFields();
         $this->g_record_id = $model->g_id;
-        $this->g_form_action = WEBROOT . "student/save";
+        $this->g_form_action = WEBROOT . "lecturer/save";
         $this->render( "edit", $model->getRecordPageTitle() );
     }
 
     function edit( $id ) {
         $this->set( array( $id ) );
-        $model = new StudentMdl( $id );
+        $model = new LecturerMdl( $id );
         if( ! $model->g_row ) {
             ( new ErrorController() )->Error404();
             return;
@@ -29,12 +29,12 @@ class StudentController extends BaseController {
             ? $_POST['uuid']
             : null
         );
-        $model = new StudentMdl( $uuid );
+        $model = new LecturerMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new StudentMgr() )->validName( $_POST['name'], $uuid ) ) {
+        if( ! ( new LecturerMgr() )->validName( $_POST['name'], $uuid ) ) {
             $data["success"] = false;
-            $data["message"] = "The name you provided is already registered for another student.";
+            $data["message"] = "The name you provided is already registered for another lecturer.";
             echo json_encode( $data );
             return;
         }

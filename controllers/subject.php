@@ -1,19 +1,19 @@
 <?php
-class StudentController extends BaseController {
+class SubjectController extends BaseController {
     public function __construct () {
     }
 
     function create() {
-        $model = new StudentMdl();
+        $model = new SubjectMdl();
         $this->g_form_fields = $model->getFields();
         $this->g_record_id = $model->g_id;
-        $this->g_form_action = WEBROOT . "student/save";
+        $this->g_form_action = WEBROOT . "subject/save";
         $this->render( "edit", $model->getRecordPageTitle() );
     }
 
     function edit( $id ) {
         $this->set( array( $id ) );
-        $model = new StudentMdl( $id );
+        $model = new SubjectMdl( $id );
         if( ! $model->g_row ) {
             ( new ErrorController() )->Error404();
             return;
@@ -23,18 +23,30 @@ class StudentController extends BaseController {
         $this->render( "edit", $model->getRecordPageTitle() );
     }
 
+    function detail( $id ) {
+        $this->set( array( $id ) );
+        $model = new SubjectMdl( $id );
+        if( ! $model->g_row ) {
+            ( new ErrorController() )->Error404();
+            return;
+        }
+        $this->g_record_id = $model->g_row["uuid"];
+        $this->g_form_fields = ( $model )->getFields();
+        $this->render( "detail", $model->getRecordPageTitle() );
+    }
+
     function save() {
         $uuid = (
             isset( $_POST['uuid'] ) && !empty( $_POST['uuid'] )
             ? $_POST['uuid']
             : null
         );
-        $model = new StudentMdl( $uuid );
+        $model = new SubjectMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new StudentMgr() )->validName( $_POST['name'], $uuid ) ) {
+        if( ! ( new SubjectMgr() )->validIdNum( $_POST['id_no'], $uuid ) ) {
             $data["success"] = false;
-            $data["message"] = "The name you provided is already registered for another student.";
+            $data["message"] = "The ID number you provided is already registered for another subject.";
             echo json_encode( $data );
             return;
         }

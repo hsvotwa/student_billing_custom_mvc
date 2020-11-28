@@ -8,7 +8,7 @@ class StudentMgr extends BaseMgr {
     protected function getRetrieveQuery( $search_text ) {
         return "select * 
                 from tbl_student
-                where ( name like '%$search_text%' or tel_no like '%$search_text%' )
+                where ( name like '%$search_text%' or student_no like '%$search_text%' )
                 order by name";
     }
 
@@ -24,8 +24,8 @@ class StudentMgr extends BaseMgr {
        return str_pad( $data["student_count"], 4, '0', STR_PAD_RIGHT );
     }
 
-    function validEmail( $email, $uuid ) {
-        $query = "select * from tbl_student where email = '$email' and uuid != '$uuid';";
+    function validName( $name, $uuid ) {
+        $query = "select * from tbl_student where name = '$name' and uuid != '$uuid';";
         $data = $this->getMySql()->getQueryResult( $query );
        return ! $data || ! $data->num_rows;
     }

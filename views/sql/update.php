@@ -1,9 +1,6 @@
 <?php
 set_time_limit( 0 );
 echo '***MySQL update started.***</br>';
-echo 'Column renaming ' . ( handleAllColumnRename() ? '' : 'not' ) . ' completed.</br>';
-echo 'Column deletion ' . ( handleAllColumnDelete() ? '' : 'not' ) . ' completed.</br>';
-echo 'Table deletion ' . ( handleTableDelete() ? '' : 'not' ) . ' completed.</br>';
 echo 'Table structure ' . ( handleAllTableStructure() ? '' : 'not' ) . ' created/updated.</br>';
 echo 'Look up data ' . ( handleAllLookupData() ? '' : 'not' ) . ' created/updated.</br>';
 echo 'Navigation ' . ( handleAllNavigation() ? '' : 'not' ) . ' created/updated.</br>';
@@ -75,26 +72,6 @@ function handleAllLookupData() {
   $return && $return = handleLookupData ( $table, EnumStatus::active, "Active" );
   $return && $return = handleLookupData ( $table, EnumStatus::inactive, "Inactive" );
   return $return;
-  // $queries[] = $qry;
-  // return $mysql->getQueryResult ( $queries );
-}
-
-function handleAllColumnRename() {
-    $return = true;
-    // $return && $return = (new MySql() )->tblColRename( /*table=*/EnumSqlTbl::tbl_user, /*old=*/'stdent_uuid', /*new=*/'student_uuid', /*$info=*/ null );
-    return $return;
-  }
-
-function handleAllColumnDelete() {
-  $return = true;
-  // $return && $return = ( new MySql() )->tblColDelete( /*table=*/EnumSqlTbl::tbl_student, /*name=*/'stdent_uuid' );
-  return $return;
-}
-
-function handleTableDelete() {
-  $return = true;
-  // $return && $return = ( new MySql() )->tblDelete( /*table=*/EnumSqlTbl::tbl_student );
-  return $return;
 }
 
 function handleOtherScript() {
@@ -129,7 +106,6 @@ function handleAllTableStructure() {
   $db_tbl = ( new MySqlTable( "tbl_subject" ) )
                   ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
                   ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'code', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
