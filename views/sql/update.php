@@ -11,14 +11,13 @@ echo 'Other script(s) ' . ( handleOtherScript() ? '' : 'not' ) . ' completed.</b
 echo '***MySQL update completed.***</br>';
 return;
 
-function handleNavigation ( $name, $controller, $action, $sequence, $user_type_id, &$uuid = '' ) {
+function handleNavigation ( $name, $controller, $action, $sequence, &$uuid = '' ) {
   $mysql = new MySql();
   $uuid = $mysql->getUuid();
   $qry = "insert into tbl_lu_nav
           set uuid = '{$uuid}',
           name = '" . Convert::toString ( $name, true ) . "',
           sequence = {$sequence},
-          user_type_id = {$user_type_id},
           controller = '" . Convert::toString ( $controller, true ) . "',
           action = '" . Convert::toString ( $action, true ) . "';";
   return $mysql->getQueryResult ( $qry );
@@ -112,8 +111,8 @@ function handleOtherScript() {
 function handleAllTableStructure() {
   $return = true;
   $db_tbl = ( new MySqlTable( "tbl_lu_status") )
-  ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
-  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
+              ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+              ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
   if ( ! $db_tbl->handle() ) {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;

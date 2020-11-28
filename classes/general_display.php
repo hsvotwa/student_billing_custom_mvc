@@ -24,7 +24,7 @@ class GeneralDisplay {
         $echo = $this->getCssRef( 'css/site.css' );
         $echo .= $this->getCssRef('css/vendor/jquery-ui.css');
         $echo .= $this->getCssRef('css/vendor/toastr.min.css');
-        $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />';
+        $echo .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700" />';
         return $echo;
     }
 
@@ -60,9 +60,7 @@ class GeneralDisplay {
         }
         $nav_echo = '<div class="div_nav">';
         while ( $row = mysqli_fetch_assoc ( $result ) ) {
-            if ( ( new UserMdl( UserSessionMdl::getUuid() ) )->hasAccessTo( $row["user_type_id"] ) ) {
-                $nav_echo .= '<a href="' . APP_DOMAIN . $row['controller'] . '/' . $row["action"] . '">' . $row['name'] . '</a>';
-            }
+            $nav_echo .= '<a href="' . APP_DOMAIN . $row['controller'] . '/' . $row["action"] . '">' . $row['name'] . '</a>';
         }
         $nav_echo .= '</div>';
         return $nav_echo;
