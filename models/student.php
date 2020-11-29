@@ -28,7 +28,8 @@ class StudentMdl extends BaseMdl {
         $query = "select c.*, 
                         d.name as department, 
                         s.name as status, 
-                        sc.uuid as student_course_uuid 
+                        sc.uuid as student_course_uuid,
+                        sc.course_cost 
                     from tbl_student_course sc
                     inner join tbl_course c on c.uuid = sc.course_uuid
                     inner join tbl_department d on d.uuid = c.department_uuid

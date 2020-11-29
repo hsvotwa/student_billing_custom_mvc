@@ -61,6 +61,7 @@ function handleAllNavigation ( $delete_existing = true ) {
   $return && $return = handleNavigation( 'Subjects', 'subjects', 'manage', ++$sequence, $uuid );
   $return && $return = handleNavigation( 'Lecturers', 'lecturers', 'manage', ++$sequence, $uuid );
   $return && $return = handleNavigation( 'Transactions', 'transactions', 'manage', ++$sequence, $uuid );
+  $return && $return = handleNavigation( 'Configuration', 'config', 'edit', ++$sequence, $uuid );
   return $return;
 }
 
@@ -78,13 +79,15 @@ function handleAllLookupData() {
   $return && $return = handleLookupData ( $table, $count++, "Dr" );
   $return && $return = handleLookupData ( $table, $count++, "Prof" );
   $return && $return = handleLookupData ( $table, $count++, "Sr" );
+  $table = "tbl_config";
+  $count = 1;
+  $return && $return = handleLookupData ( $table, $count++, "VAT percentage", array( "key" => "value", "value" => "15") );
   return $return;
 }
 
 function handleOtherScript() {
   $mysql = new MySql();
   $queries = [
-    "delete from tbl_lu_role_type where enum_id= " . EnumUserRoleType::none
   ];
   if ( empty ( $queries ) ) {
       return true;
@@ -104,6 +107,14 @@ function handleAllTableStructure() {
   $db_tbl = ( new MySqlTable( "tbl_lu_title") )
               ->addColumn( /*$name = */'enum_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
               ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
+  if ( ! $db_tbl->handle() ) {
+    echo "Could not create/alter table: {$db_tbl->getName()} </br>";
+    $return = false;
+  }
+  $db_tbl = ( new MySqlTable( "tbl_config") )
+              ->addColumn( /*$name = */'enum_id', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
+              ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
+              ->addColumn( /*$name = */'value', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false );
   if ( ! $db_tbl->handle() ) {
     echo "Could not create/alter table: {$db_tbl->getName()} </br>";
     $return = false;

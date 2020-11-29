@@ -14,23 +14,13 @@
         const inactive = 2;
     }
 
-    final class EnumStudentStatus {
-        const applied = 0;
-        const active = 1;
-        const inactive = 2;
+    final class EnumConfig {
+        const vat = 1;
     }
 
     final class EnumYesNo {
         const no = 0;
         const yes = 1;
-    }
-
-    final class EnumUserRoleType {
-        const none = 0;
-        const guest = 1;
-        const student = 2;
-        const admin = 3;
-        const authenticated_user = 4;
     }
 
     final class EnumSqlQryType {

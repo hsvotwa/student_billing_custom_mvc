@@ -2,7 +2,7 @@
 class Common {
     public static function isLiveServer() {
         $dev_domains = array (
-            'localhost', '127.0.0.1', 'hsvotwa.local'
+            'localhost', '127.0.0.1'
        );
        $http_host = strtolower ( $_SERVER['HTTP_HOST'] );
        foreach ( $dev_domains as $dev_domain ) {

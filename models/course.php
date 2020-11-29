@@ -38,7 +38,6 @@ class CourseMdl extends BaseMdl {
                     where sc.course_uuid='" . $this->g_id . "' 
                     and sc.soft_deleted != '" . EnumYesNo::yes . "' 
                     order by su.name";
-                    echo $query;
         return $this->getMySql()->getQueryResult( $query );
     }
 

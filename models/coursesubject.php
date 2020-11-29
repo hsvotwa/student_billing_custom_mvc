@@ -30,7 +30,6 @@ class CoursesubjectMdl extends BaseMdl {
                         from tbl_course_subject_lecturer
                     where subject_uuid = '$subject_uuid'
                     and course_uuid = '$course_uuid'
-                    and lecturer_uuid = '$lecturer_uuid'
                     and soft_deleted = " . EnumYesNo::no . ";";
         $existing = $this->getMySql()->getQueryResult( $query );
         return $existing && $existing->num_rows;

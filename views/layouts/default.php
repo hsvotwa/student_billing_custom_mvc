@@ -17,7 +17,6 @@
         ?>
         <div class="div_hd_corner">
             <font class="font_h3"><a class="profile_name" href="<?php echo WEBROOT; ?>profiles/manage"><?php echo $selected_profile ?></a></font>
-            <font class="font_white" style="font-size:12px">&nbsp;&#8226;</font>
             <div style="float-right">
                 <div class="nav-div-prog" id="nav-div-prog">
                     <img src="<?php echo $loader_path ?>" />

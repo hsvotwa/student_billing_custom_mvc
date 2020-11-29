@@ -15,6 +15,23 @@ class CourseMgr extends BaseMgr {
         return $query;
     }
 
+    public static function getCost( $course_uuid ) {
+        $query = "select ifnull(sum(cost), 0) total_cost
+                    from tbl_subject where uuid in (
+                    select subject_uuid from tbl_course_subject_lecturer where course_uuid ='$course_uuid' and 
+                        soft_deleted != " . EnumYesNo::yes . "
+                )";
+        $data = ( new MySql() )->getQueryResult( $query );
+        if( ! $data || ! $data->num_rows ) {
+            return 0;
+        }
+        $data = mysqli_fetch_array( $data );
+        $vat = ConfigMgr::getValue( EnumConfig::vat );
+        return $vat && is_numeric( $vat ) ? 
+            $data["total_cost"] * ( ( 100 + $vat ) / 100 )  : 
+            $data["total_cost"];
+    }
+
     function validName( $name, $uuid ) {
         $query = "select * from tbl_course where name = '$name' and uuid != '$uuid';";
         $data = $this->getMySql()->getQueryResult( $query );

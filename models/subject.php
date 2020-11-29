@@ -34,7 +34,7 @@ class SubjectMdl extends BaseMdl {
             "name", "name", "Name", true, EnumFieldDataType::_string, EnumFieldType::_string, $this->g_sql_table, true, "text", $this->g_row
         );
         $return["cost"] = new FieldMdl( 
-            "cost", "cost", "Cost", true, EnumFieldDataType::_float, EnumFieldType::_float, $this->g_sql_table, true, "text", $this->g_row
+            "cost", "cost", "Cost (excl. VAT)", true, EnumFieldDataType::_float, EnumFieldType::_float, $this->g_sql_table, true, "text", $this->g_row
         );
         $this->g_fields = $return;
         return $this->g_fields;

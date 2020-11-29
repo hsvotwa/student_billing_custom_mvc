@@ -43,6 +43,7 @@ class StudentcourseMdl extends BaseMdl {
                     set uuid = uuid(),
                     course_uuid = '" . $_POST["course_uuid"] . "',
                     student_uuid = '" . $_POST["student_uuid"] . "',
+                    course_cost = '" . CourseMgr::getCost( $_POST["course_uuid"] ) . "',
                     soft_deleted = " . EnumYesNo::no . ",
                     created = now(),
                     last_modified = now();";
