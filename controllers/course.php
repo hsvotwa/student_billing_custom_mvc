@@ -38,7 +38,7 @@ class CourseController extends BaseController {
             echo json_encode( $data );
             return;
         }
-        $success = $model->set() && $model->pushToBCTime( $error_message );
+        $success = $model->set();
         if ( $error_message ) {
             $model->g_errors[] = $error_message;
         }

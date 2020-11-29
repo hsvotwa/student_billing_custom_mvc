@@ -65,7 +65,7 @@ label {
 
 .div_hd_corner {
     position: relative;
-    background-color: #36365B;
+    background-color: indianred;
     border-bottom-right-radius: 4px;
     vertical-align: middle;
     line-height: 39px;
@@ -129,7 +129,7 @@ label {
     text-align: center;
     width: 54px;
     min-width: 54px;
-    background-color: #36365B
+    background-color: indianred
 }
 
 .tbl_hd_td_2 {
@@ -137,7 +137,7 @@ label {
     width: auto;
     min-width: 760px;
     padding: 0;
-    background-color: #36365B
+    background-color: indianred
 }
 
 .tbl_hd_td_3 {
@@ -269,16 +269,16 @@ label {
 }
 
 .font_h1_maroon {
-    color: #36365B;
+    color: indianred;
     font-size: 18px;
     font-weight: 400
 }
 
 .font_h2 {
-    color: #333;
+    color: indianred;
     font-size: 16px;
     font-weight: 400;
-    padding-left: 2px
+    padding-left: 6px;
 }
 
 .font_h3 {
@@ -288,13 +288,13 @@ label {
 }
 
 .font_h4 {
-    color: #36365B;
+    color: indianred;
     font-size: 14px;
     font-weight: 400
 }
 
 .font_h5 {
-    color: #36365B;
+    color: indianred;
     font-size: 12px;
     font-weight: 400
 }
@@ -319,7 +319,7 @@ label {
 }
 
 .font_maroon {
-    color: #36365B
+    color: indianred
 }
 
 .font_orange {
@@ -332,7 +332,7 @@ label {
 }
 
 .font_hd_auth_not {
-    color: #36365B;
+    color: indianred;
     font-size: 14px
 }
 
@@ -357,7 +357,7 @@ a.url_app_title {
 }
 
 a.url_app_title:link {
-    color: indianred;
+    color: #36365B;
     font-weight: 400;
     font-size: 20px !important;
     text-decoration: none;
@@ -492,12 +492,12 @@ select {
     padding: 5px;
     font-family: Lato, arial;
     font-size: 12px;
-    border: 1px solid #f2f2f2;
+    border: 1px solid #ccc;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     -webkit-transform: translate3d(0, 0, 0);
-    will-change: transform
+    will-change: transform;
 }
 
 .text_dormant,
@@ -538,8 +538,8 @@ select {
 }
 
 .button {
-    background-color: #36365B;
-    border: 1px solid #36365B;
+    background-color: indianred;
+    border: 1px solid indianred;
     color: #fff;
     position: relative;
     padding: 8px;
@@ -548,18 +548,18 @@ select {
 }
 
 a.button {
-    background-color: #f1f1f1;
-    border: 1px solid #f1f1f1;
-    color: #333;
+    background-color: indianred;
+    border: 1px solid indianred;
+    color: #fff;
     position: relative;
-    border-radius: 5px;
-    padding: 6px;
+    border-radius: 2px;
+    padding: 4px;
     text-decoration: none;
 }
 
 .btn_visual {
-    background-color: #36365B;
-    border: 1px solid #36365B;
+    background-color: indianred;
+    border: 1px solid indianred;
     color: #fff;
     position: relative
 }
@@ -582,7 +582,7 @@ a.button {
 }
 
 .text_fail_valid {
-    border: 1px solid #36365B;
+    border: 1px solid indianred;
     color: #333
 }
 
@@ -607,12 +607,12 @@ a.button {
 }
 
 .select_fail_valid {
-    border: 1px solid #36365B;
+    border: 1px solid indianred;
     color: #333
 }
 
 .action_link_red {
-    background-color: #36365B;
+    background-color: indianred;
     min-width: 90px;
     text-decoration: none;
     color: #fff !important;
@@ -630,7 +630,7 @@ a.button {
 }
 
 .action_link:hover {
-    background-color: #36365B
+    background-color: indianred
 }
 
 .btn_action_pend,
@@ -638,7 +638,7 @@ a.button {
 .action_link,
 .action_link_red,
 .submit {
-    cursor: pointer
+    cursor: pointer;
 }
 
 input[type=search] {
@@ -933,7 +933,7 @@ table th {
 .tbl_cont_data thead {
     display: none;
     position: fixed;
-    top: 146px;
+    top: 136px;
     opacity: .96;
     z-index: 1;
     min-height: 24px;
@@ -1148,7 +1148,7 @@ table th {
 }
 
 .div_and_hd_red_text:after {
-    background-color: #36365B
+    background-color: indianred
 }
 
 .div_and_hd_green_text div,
@@ -1325,7 +1325,7 @@ table th {
     position: fixed;
     top: 0;
     height: 40px;
-    background-color: #36365B;
+    background-color: indianred;
     z-index: 9;
     line-height: 40px
 }
@@ -1547,7 +1547,7 @@ table th {
 @media only screen and (min-width:1170px) {
     .nav-primary a,
     .nav-primary ul a {
-        color: #36365B
+        color: indianred
     }
 }
 
@@ -1579,7 +1579,7 @@ table th {
 }
 
 .nav-primary .nav-see-all a {
-    color: #36365B
+    color: indianred
 }
 
 .nav-primary .nav-nav-icons .nav-nav-item::before {
@@ -1738,7 +1738,7 @@ table th {
     }
     .nav-primary .nav-secondary>li,
     .nav-primary .nav-secondary>li>a {
-        color: #36365B;
+        color: indianred;
         font-size: 14px;
         margin-bottom: 10px;
         padding-bottom: 10px
@@ -1815,7 +1815,7 @@ table th {
         background: #f6f6f5
     }
     .nav-primary .nav-nav-icons .nav-nav-item h3 {
-        color: #36365B;
+        color: indianred;
         font-weight: 700
     }
     .nav-primary .nav-nav-icons .nav-nav-item p {
@@ -2118,7 +2118,7 @@ table th {
 
 @media only screen and (min-width:1170px) {
     .nav-font-li {
-        color: #36365B
+        color: indianred
     }
 }
 
@@ -3375,7 +3375,7 @@ label.no_italic {
 
 #error_label {
     padding: 5px 0px;
-    color: #36365B;
+    color: indianred;
 }
 
 .checkbox_label {
@@ -3384,5 +3384,5 @@ label.no_italic {
 
 #student_error {
     padding: 5px 10px;
-    color: #36365B;
+    color: indianred;
 }

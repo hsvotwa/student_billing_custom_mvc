@@ -4,7 +4,7 @@
             <div class="div_filter">
                 <?php 
                     if( $can_edit ) {
-                        echo '<a href="' . APP_DOMAIN . 'transaction/create/" class="button">New</a>';
+                        echo '<a href="' . APP_DOMAIN . 'transaction/create/" class="button">Create new</a>';
                     }
                 ?>
                 <input type="search" name="search" id="search" class="text" placeholder="Search transaction(s)..." />&nbsp;

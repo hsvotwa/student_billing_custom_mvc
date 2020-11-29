@@ -9,9 +9,9 @@ class DepartmentsController extends BaseController {
         $this->render( "manage", $mgr->getRecordPageTitle() );
     }
 
-    function list( $search_text ) {
+    function list( $search_text = "" ) {
         $this->g_can_edit = true;
-        $model = new DepartmentMgr( "", $search_text );
+        $model = new DepartmentMgr( $search_text );
         $this->g_layout = null;
         $this->g_form_fields = ( new DepartmentMdl() )->getFields();
         $this->g_records = $model->getRecords();

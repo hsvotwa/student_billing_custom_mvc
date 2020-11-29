@@ -9,11 +9,11 @@ class LecturersController extends BaseController {
         $this->render( "manage", $mgr->getRecordPageTitle() );
     }
 
-    function list( $search_text ) {
+    function list( $search_text = "" ) {
         $this->g_can_edit = true;
-        $model = new LecturerMgr( "", $search_text );
+        $model = new LecturerMgr( $search_text );
         $this->g_layout = null;
-        $this->g_form_fields = ( new LecturerMdl() )->getFields();
+        $this->g_form_fields = ( new LecturerMdl( $search_text ) )->getFields();
         $this->g_records = $model->getRecords();
         $this->render("list");
     }

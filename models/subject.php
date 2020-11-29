@@ -1,12 +1,12 @@
 <?php
-class CourseMdl extends BaseMdl {
+class SubjectMdl extends BaseMdl {
     public $g_current_unit_count = null;
 
     public function __construct ( $id = null ) {
         $this->g_id = $id;
         $this->g_current_unit_count = 0;
-        $this->g_entity_name = "course";
-        $this->g_sql_table = "tbl_course";
+        $this->g_entity_name = "Subject";
+        $this->g_sql_table = "tbl_subject";
         $this->g_retrieve_query = $this->getRetrieveQuery();
         $this->g_fields = $this->g_invalid_fields = $this->g_errors = array ();
         if ( $id ) {

@@ -9,11 +9,11 @@ class SubjectsController extends BaseController {
         $this->render( "manage", $mgr->getRecordPageTitle() );
     }
 
-    function list( $search_text ) {
+    function list( $search_text = "" ) {
         $this->g_can_edit = true;
-        $model = new SubjectMgr( "", $search_text );
+        $model = new SubjectMgr( $search_text );
         $this->g_layout = null;
-        $this->g_form_fields = ( new SubjectMdl() )->getFields();
+        $this->g_form_fields = ( new SubjectMdl( $search_text ) )->getFields();
         $this->g_records = $model->getRecords();
         $this->render("list");
     }

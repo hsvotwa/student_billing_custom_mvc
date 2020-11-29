@@ -28,11 +28,17 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-50">
+                                <td class="w-50" colspan="2">
                                     <?php
                                         echo $form_fields["status_id"]->getFieldHtmlLabel();
                                         echo $form_fields["status_id"]->getFieldHtml();
                                     ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="submit" value="Submit" class="button" />
+                                    <a href="<?php echo APP_DOMAIN; ?>courses/manage" class="url">Go to list</a>
                                 </td>
                             </tr>
                         </table>

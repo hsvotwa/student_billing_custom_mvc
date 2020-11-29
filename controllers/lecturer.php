@@ -32,13 +32,13 @@ class LecturerController extends BaseController {
         $model = new LecturerMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new LecturerMgr() )->validName( $_POST['name'], $uuid ) ) {
+        if( ! ( new LecturerMgr() )->validName( $_POST['full_name'], $uuid ) ) {
             $data["success"] = false;
             $data["message"] = "The name you provided is already registered for another lecturer.";
             echo json_encode( $data );
             return;
         }
-        $success = $model->set() && $model->pushToBCTime( $error_message );
+        $success = $model->set();
         if ( $error_message ) {
             $model->g_errors[] = $error_message;
         }

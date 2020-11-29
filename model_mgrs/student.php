@@ -6,10 +6,13 @@ class StudentMgr extends BaseMgr {
     }
 
     protected function getRetrieveQuery( $search_text ) {
-        return "select * 
-                from tbl_student
-                where ( name like '%$search_text%' or student_no like '%$search_text%' )
-                order by name";
+        return "select st.*, s.name as status, t.name as title 
+                from tbl_student st
+                inner join tbl_lu_status s on s.enum_id = st.status_id
+                inner join tbl_lu_title t on t.enum_id = st.title_id
+                where ( st.first_name like '%$search_text%' or st.surname like '%$search_text%'
+                        or st.email like '%$search_text%' )
+                order by st.first_name";
     }
 
     public function getNextStudentNumber() {
@@ -24,8 +27,8 @@ class StudentMgr extends BaseMgr {
        return str_pad( $data["student_count"], 4, '0', STR_PAD_RIGHT );
     }
 
-    function validName( $name, $uuid ) {
-        $query = "select * from tbl_student where name = '$name' and uuid != '$uuid';";
+    function validEmail( $email, $uuid ) {
+        $query = "select * from tbl_student where email = '$email' and uuid != '$uuid';";
         $data = $this->getMySql()->getQueryResult( $query );
        return ! $data || ! $data->num_rows;
     }

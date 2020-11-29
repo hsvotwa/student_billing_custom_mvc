@@ -6,9 +6,11 @@ class TransactionMgr extends BaseMgr {
     }
 
     protected function getRetrieveQuery ( $search_text = "" ) {
-        return "select *
-                   from tbl_transaction
-                where name like '%" . $search_text . "%' or code like '%" . $search_text . "%'
-                order by code";
+        return "select *, concat(s.surname, ' ', s.first_name, ' (', t.name, ')') as student_name
+                   from tbl_student_transaction st
+                   inner join tbl_student s on s.uuid = st.student_uuid
+                   inner join tbl_lu_title t on t.enum_id = s.title_id
+                where s.first_name like '%" . $search_text . "%' or s.surname like '%" . $search_text . "%'
+                order by s.surname, s.first_name";
    }
 }

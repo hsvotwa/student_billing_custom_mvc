@@ -10,7 +10,7 @@ class CourseMgr extends BaseMgr {
                     from tbl_course c
                     inner join tbl_department d on d.uuid = c.department_uuid
                     inner join tbl_lu_status s on s.enum_id = c.status_id
-                    where name like '%$search_text%'
+                    where c.name like '%$search_text%'
                     order by c.name";
         return $query;
     }

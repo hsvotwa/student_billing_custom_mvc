@@ -4,7 +4,7 @@
             <div class="div_filter">
                 <?php 
                     if( $can_edit ) {
-                        echo '<a href="' . APP_DOMAIN . 'lecturer/create/" class="button">New</a>';
+                        echo '<a href="' . APP_DOMAIN . 'lecturer/create/" class="button">Create new</a>';
                     }
                 ?>
                 <input type="search" name="search" id="search" class="text" placeholder="Search lecturer(s)..." />&nbsp;

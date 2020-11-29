@@ -27,6 +27,12 @@
                                     ?>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="submit" value="Submit" class="button" />
+                                    <a href="<?php echo APP_DOMAIN; ?>departments/manage" class="url">Go to list</a>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

@@ -23,18 +23,6 @@ class SubjectController extends BaseController {
         $this->render( "edit", $model->getRecordPageTitle() );
     }
 
-    function detail( $id ) {
-        $this->set( array( $id ) );
-        $model = new SubjectMdl( $id );
-        if( ! $model->g_row ) {
-            ( new ErrorController() )->Error404();
-            return;
-        }
-        $this->g_record_id = $model->g_row["uuid"];
-        $this->g_form_fields = ( $model )->getFields();
-        $this->render( "detail", $model->getRecordPageTitle() );
-    }
-
     function save() {
         $uuid = (
             isset( $_POST['uuid'] ) && !empty( $_POST['uuid'] )
@@ -44,13 +32,13 @@ class SubjectController extends BaseController {
         $model = new SubjectMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new SubjectMgr() )->validIdNum( $_POST['id_no'], $uuid ) ) {
+        if( ! ( new SubjectMgr() )->validName( $_POST['name'], $uuid ) ) {
             $data["success"] = false;
-            $data["message"] = "The ID number you provided is already registered for another subject.";
+            $data["message"] = "The name you provided is already registered for another subject.";
             echo json_encode( $data );
             return;
         }
-        $success = $model->set() && $model->pushToBCTime( $error_message );
+        $success = $model->set();
         if ( $error_message ) {
             $model->g_errors[] = $error_message;
         }

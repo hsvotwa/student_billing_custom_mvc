@@ -8,8 +8,8 @@ class SubjectMgr extends BaseMgr {
     protected function getRetrieveQuery ( $search_text = "" ) {
          return "select *
                     from tbl_subject
-                 where name like '%" . $search_text . "%' or code like '%" . $search_text . "%'
-                 order by code";
+                 where name like '%" . $search_text . "%'
+                 order by name";
     }
 
     function validName( $name, $uuid ) {

@@ -8,17 +8,17 @@ if( ! $records || ! $records->num_rows ) {
 <tr>
     <td class="head_td" width="200">
         <?php 
-            echo $form_fields["first_name"]->getFieldHtmlLabel( /*is_form=*/ false );
-        ?>
-    </td>
-    <td class="head_td" width="200">
-        <?php 
             echo $form_fields["name"]->getFieldHtmlLabel( /*is_form=*/ false );
         ?>
     </td>
     <td class="head_td" width="200">
         <?php 
-            echo $form_fields["department_uuid"]->getFieldHtmlLabel( /*is_form=*/ false );
+            echo $form_fields["tel_no"]->getFieldHtmlLabel( /*is_form=*/ false );
+        ?>
+    </td>
+    <td class="head_td" width="200">
+        <?php 
+            echo $form_fields["email"]->getFieldHtmlLabel( /*is_form=*/ false );
         ?>
     </td>
     <td class="head_td" width="200">
@@ -32,10 +32,12 @@ if( ! $records || ! $records->num_rows ) {
     <?php
     foreach ( $records as $record ) {
         echo "<tr>";
-        echo "<td width=\"200\"><a class='url' href='" . WEBROOT . "course/edit/" . $record["uuid"] . "' >" . $record['surname'] . " " . $record['first_name'] . "</td>";
-        echo "<td width=\"200\">" . $record['id_no'] . "</td>";
-        echo "<td width=\"200\">" . $record['cell_no'] . "</td>";
-        // echo "<td width=\"200\">" . $record['is_tenant_desc'] . "</td>";
+        echo "<td width=\"200\"><a class='url' href='" . WEBROOT . "student/edit/" . $record["uuid"] . "' >" . 
+            $record['surname'] . " " . $record['first_name'] . " (" . $record['title'] . ") " . 
+        "</td>";
+        echo "<td width=\"200\">" . $record['tel_no'] . "</td>";
+        echo "<td width=\"200\">" . $record['email'] . "</td>";
+        echo "<td width=\"200\">" . $record['status'] . "</td>";
         echo "</tr>";
     }
     ?>

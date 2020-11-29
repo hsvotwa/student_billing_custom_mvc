@@ -22,9 +22,8 @@ if( ! $records || ! $records->num_rows ) {
     <?php
     foreach ( $records as $record ) {
         echo "<tr>";
-        echo "<td width=\"200\"><a class='url' href='" . WEBROOT . "course/edit/" . $record["uuid"] . "' >" . $record['name'] . "</td>";
+        echo "<td width=\"200\"><a class='url' href='" . WEBROOT . "department/edit/" . $record["uuid"] . "' >" . $record['name'] . "</td>";
         echo "<td width=\"200\">" . $record['status'] . "</td>";
-        // echo "<td width=\"200\">" . $record['is_tenant_desc'] . "</td>";
         echo "</tr>";
     }
     ?>

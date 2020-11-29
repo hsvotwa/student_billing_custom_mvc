@@ -8,8 +8,8 @@ class DepartmentMgr extends BaseMgr {
     protected function getRetrieveQuery ( $search_text ) {
         $query = "select d.*, s.name as status 
                     from tbl_department d
-                    inner join tbl_lu_status s on s.enum_id = c.status_id
-                    where name like '%$search_text%'
+                    inner join tbl_lu_status s on s.enum_id = d.status_id
+                    where d.name like '%$search_text%'
                     order by d.name";
         return $query;
     }

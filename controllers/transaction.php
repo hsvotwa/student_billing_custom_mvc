@@ -32,13 +32,9 @@ class TransactionController extends BaseController {
         $model = new TransactionMdl( $uuid );
         $model->getFields();
         $error_message = "";
-        if( ! ( new TransactionMgr() )->validName( $_POST['name'], $uuid ) ) {
-            $data["success"] = false;
-            $data["message"] = "The name you provided is already registered for another transaction.";
-            echo json_encode( $data );
-            return;
-        }
-        $success = $model->set() && $model->pushToBCTime( $error_message );
+        $soft_deleted = EnumYesNo::no;
+        $model->g_additional_sql = " soft_deleted = '$soft_deleted'";
+        $success = $model->set();
         if ( $error_message ) {
             $model->g_errors[] = $error_message;
         }
