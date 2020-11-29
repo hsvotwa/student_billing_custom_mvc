@@ -115,6 +115,7 @@ var dialogHandler = function(title, _dialogContent, callBack, validateCallback, 
             text: (typeof closeButtonText === 'undefined' ? "Close" : closeButtonText),
             click: function() {
                 if (closeCallBack === null) {
+                    $(this).html('');
                     $(this).dialog("destroy");
                 } else {
                     closeCallBack();
@@ -148,13 +149,19 @@ var dialogHandler = function(title, _dialogContent, callBack, validateCallback, 
             if (closeOnSave) {
                 event.preventDefault();
                 if (closeCallBack === null) {
+                    alert($(this).id);
+                    $("#" + $(this).id).html('');
                     $(this).dialog("destroy");
                 } else if (closeCallBack($(this))) {
+                    alert($(this).id);
+                    $("#" + $(this).id).html('');
                     $(this).dialog("destroy");
                 }
             }
         },
         cancel: function() {
+            alert($(this).id);
+            $("#" + $(this).id).html('');
             $(this).dialog('close');
         }
     });

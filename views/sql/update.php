@@ -141,10 +141,10 @@ function handleAllTableStructure() {
   }
    $db_tbl = ( new MySqlTable( "tbl_course_subject_lecturer" ) )
                   ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::primary, /*$auto_increment =*/false )
-                  ->addColumn( /*$name = */'name', EnumMySqlColType::varchar, /*$len = */50, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'course_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
                   ->addColumn( /*$name = */'subject_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
-                  ->addColumn( /*$name = */'lecturer_id', EnumMySqlColType::tinyint, /*$len = */50, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
+                  ->addColumn( /*$name = */'lecturer_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
+                  ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                   ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )
                   ->addColumn( /*$name = */'last_modified', EnumMySqlColType::date_time );
   if ( ! $db_tbl->handle() ) {
@@ -180,7 +180,7 @@ function handleAllTableStructure() {
     $db_tbl = ( new MySqlTable( "tbl_student_course" ) )
                 ->addColumn( /*$name = */'uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::uniq )
                 ->addColumn( /*$name = */'student_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */true )
-                ->addColumn( /*$name = */'course_uuid', EnumMySqlColType::_int, /*$len = */11, /*$def = */null, /*$allow_null = */false )
+                ->addColumn( /*$name = */'course_uuid', EnumMySqlColType::char, /*$len = */36, /*$def = */null, /*$allow_null = */false )
                 ->addColumn( /*$name = */'course_cost', EnumMySqlColType::decimal, /*$len = */"18,2", /*$def = */0, /*$allow_null = */false )
                 ->addColumn( /*$name = */'soft_deleted', EnumMySqlColType::tinyint, /*$len = */4, /*$def = */null, /*$allow_null = */false, EnumMySqlIndexType::index )
                 ->addColumn( /*$name = */'created', EnumMySqlColType::date_time )

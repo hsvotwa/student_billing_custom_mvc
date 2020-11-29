@@ -27,7 +27,7 @@ if( ! $records || ! $records->num_rows ) {
     <?php
     foreach ( $records as $record ) {
         echo "<tr>";
-        echo "<td width=\"200\"><a class='url' href='" . WEBROOT . "subject/edit/" . $record["uuid"] . "' >" . $record['student_name'] . "</td>";
+        echo "<td width=\"200\"><a class='url' href='" . WEBROOT . "student/edit/" . $record["uuid"] . "' >" . $record['student_name'] . "</td>";
         echo "<td width=\"200\">" . Convert::toDate( $record['date'], false, true ) . "</td>";
         echo "<td width=\"200\" class=\"text-right\">" . Convert::toNum( $record['amount'] ) . "</td>";
         echo "</tr>";

@@ -8,6 +8,9 @@
                         <li id="li-tab-gen">
                             <a href="#tab-gen">Detail</a>
                         </li>
+                        <li id="li-tab-subjects">
+                            <a href="#tab-subjects" id="tab-link-subjects">Subject(s)</a>
+                        </li>
                     </ul>
                     <div id="tab-gen">
                         <input type="hidden" name="uuid" id="uuid" value="<?php echo $record_id; ?>" /> 
@@ -35,19 +38,33 @@
                                     ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="submit" value="Submit" class="button" />
-                                    <a href="<?php echo APP_DOMAIN; ?>courses/manage" class="url">Go to list</a>
-                                </td>
-                            </tr>
                         </table>
+                    </div>
+                    <div id="tab-subjects">
                     </div>
                 </div>
             </td>
         </tr>
+        <tr>
+        <td colspan="2">
+            <input type="submit" value="Submit" class="button" />
+            <a href="#" id="btn_link_subject" class="url <?php echo true ? "" : "hidden" ?>" onclick="showDialog();">Add new subject</a> |
+            <a href="<?php echo APP_DOMAIN; ?>courses/manage" class="url">Go to list</a>
+        </td>
+    </tr>
     </table>
 </form>
+<div id="link_subject"></div>
 <?php
     echo $gen->getJavascriptRef('js/course.js')
 ?>
+<script>
+    function showDialog() {
+        $('#link_subject').load('<?php echo WEBROOT . "course/createsubject"; ?>',
+            function() {
+                $("#course_uuid").val($("#uuid").val());
+                dialogHandler('Add new subject', $('#link_subject'), linkSubjects, null, 300, null, true, false, false);
+            });
+
+    }
+</script>

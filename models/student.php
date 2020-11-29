@@ -24,6 +24,22 @@ class StudentMdl extends BaseMdl {
         return ( ! is_null ( $this->g_row ) ? $this->g_entity_name . ': ' . $this->g_row['surname'] . " " . $this->g_row['first_name']  : 'Register as a ' . $this->g_entity_name );
     }
 
+    function getCourses() {
+        $query = "select c.*, 
+                        d.name as department, 
+                        s.name as status, 
+                        sc.uuid as student_course_uuid 
+                    from tbl_student_course sc
+                    inner join tbl_course c on c.uuid = sc.course_uuid
+                    inner join tbl_department d on d.uuid = c.department_uuid
+                    inner join tbl_lu_status s on s.enum_id = c.status_id
+                    where sc.student_uuid='" . $this->g_id . "' 
+                    and sc.soft_deleted != '" . EnumYesNo::yes . "' 
+                    order by c.name";
+                    echo $query;
+        return $this->getMySql()->getQueryResult( $query );
+    }
+
     public function getFields() {
         if ( $this->g_fields != null ) {
             return $this->g_fields;

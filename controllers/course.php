@@ -44,4 +44,39 @@ class CourseController extends BaseController {
         }
         echo ( new GeneralDisplay() )->deterFeedback( $success, $model->getRecordPageTitle(), implode( ",", $model->g_errors ) );
     }
+
+    function createsubject() {
+        $model = new CoursesubjectMdl();
+        $this->g_form_fields = $model->getFields();
+        $this->g_record_id = $model->g_id;
+        $this->g_layout = null;
+        $this->g_form_action = WEBROOT . "course/savesubject";
+        $this->render( "coursesubject", $model->getRecordPageTitle() );
+    }
+
+    function savesubject() {
+        $model = new CoursesubjectMdl();
+        $model->getFields();
+        $error = "";
+        $success = $model->save( $error );
+        echo ( new GeneralDisplay() )->deterFeedback( $success, "", $error );
+    }
+
+    function removesubject() {
+        $model = new CoursesubjectMdl();
+        $model->getFields();
+        $message = "";
+        $success = $model->remove( $message );
+        echo ( new GeneralDisplay() )->deterFeedback( $success, "", $message );
+    }
+
+    function subjectlist( $course_uuid ) {
+        $this->g_can_edit = true;
+        $model = new CourseMdl( $course_uuid );
+        $this->g_layout = null;
+        $error_message = "";
+        $this->g_records = $model->getSubjects();
+        $this->g_form_fields = (new CourseMdl())->getFields();
+        $this->render("subjectlist");
+    }
 }

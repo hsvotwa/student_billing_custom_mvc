@@ -25,6 +25,23 @@ class CourseMdl extends BaseMdl {
         return ( ! is_null ( $this->g_row ) ? $this->g_entity_name . ': ' . $this->g_row['name']  : 'New ' . strtolower( $this->g_entity_name ) );
     }
 
+    function getSubjects() {
+        $query = "select l.full_name as lecturer, 
+                        su.name as subject, 
+                        su.cost as cost, 
+                        su.uuid as uuid, 
+                        sc.uuid as course_subject_uuid 
+                    from tbl_course_subject_lecturer sc
+                    inner join tbl_course c on c.uuid = sc.course_uuid
+                    inner join tbl_subject su on su.uuid = sc.subject_uuid
+                    inner join tbl_lecturer l on l.uuid = sc.lecturer_uuid
+                    where sc.course_uuid='" . $this->g_id . "' 
+                    and sc.soft_deleted != '" . EnumYesNo::yes . "' 
+                    order by su.name";
+                    echo $query;
+        return $this->getMySql()->getQueryResult( $query );
+    }
+
     public function getFields () {
         if ( $this->g_fields != null ) {
             return $this->g_fields;

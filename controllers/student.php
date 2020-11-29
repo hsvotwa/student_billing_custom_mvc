@@ -46,11 +46,7 @@ class StudentController extends BaseController {
     }
 
     function createcourse() {
-        if( ! ( new UserMdl() )->hasAccessTo( EnumUserRoleType::manage_course ) ) {
-            echo ( new GeneralDisplay() )->deterFeedback( false, "", UNAUTHORISED_MESSAGE );
-            return;
-        }
-        $model = new StudentCourseMdl();
+        $model = new StudentcourseMdl();
         $this->g_form_fields = $model->getFields();
         $this->g_record_id = $model->g_id;
         $this->g_layout = null;
@@ -59,7 +55,7 @@ class StudentController extends BaseController {
     }
 
     function savecourse() {
-        $model = new StudentCourseMdl();
+        $model = new StudentcourseMdl();
         $model->getFields();
         $error = "";
         $success = $model->save( $error );
@@ -67,10 +63,20 @@ class StudentController extends BaseController {
     }
 
     function removecourse() {
-        $model = new StudentCourseMdl();
+        $model = new StudentcourseMdl();
         $model->getFields();
         $message = "";
         $success = $model->remove( $message );
         echo ( new GeneralDisplay() )->deterFeedback( $success, "", $message );
+    }
+
+    function courselist( $student_uuid ) {
+        $this->g_can_edit = true;
+        $model = new StudentMdl( $student_uuid );
+        $this->g_layout = null;
+        $error_message = "";
+        $this->g_records = $model->getCourses();
+        $this->g_form_fields = (new CourseMdl())->getFields();
+        $this->render("courselist");
     }
 }

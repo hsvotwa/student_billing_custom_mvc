@@ -17,8 +17,7 @@ class StudentMgr extends BaseMgr {
 
     public function getNextStudentNumber() {
         $query = "select ifnull(count(uuid), 0) + 1 as student_count
-                from tbl_student
-                order by name";
+                from tbl_student";
         $data = $this->getMySql()->getQueryResult( $query );
        if( ! $data || ! $data->num_rows ) {
            return "S0001";

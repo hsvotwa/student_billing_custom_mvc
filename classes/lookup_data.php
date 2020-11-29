@@ -46,4 +46,24 @@ class LookupData {
                 order by name";
         return ( new MySql() )->getQryRlt( $query );
     }
+
+    public static function getCourseList() {
+        $query = "select 
+                    uuid as value, 
+                    name 
+                from tbl_course
+                where status_id = '" . EnumStatus::active . "'
+                order by name";
+        return ( new MySql() )->getQryRlt( $query );
+    }
+
+    public static function getLecturerList() {
+        $query = "select 
+                    uuid as value, 
+                    full_name as name 
+                from tbl_lecturer
+                where status_id = '" . EnumStatus::active . "'
+                order by full_name";
+        return ( new MySql() )->getQryRlt( $query );
+    }
 }

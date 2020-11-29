@@ -9,7 +9,7 @@
                             <a href="#tab-gen">Detail</a>
                         </li>
                         <li id="li-tab-courses">
-                            <a href="#tab-courses" id="tab-link-courses">Courses(s)</a>
+                            <a href="#tab-courses" id="tab-link-courses">Course(s)</a>
                         </li>
                     </ul>
                     <div id="tab-gen">
@@ -58,13 +58,6 @@
                                     ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <input type="submit" value="Submit" class="button" />
-                                    <a href="#" id="btn_link_course" class="url <?php echo true ? "" : "hidden" ?>" onclick="showDialog();">Enroll new course</a> |
-                                    <a href="<?php echo APP_DOMAIN; ?>students/manage" class="url">Go to list</a>
-                                </td>
-                            </tr>
                         </table>
                     </div>
                     <div id="tab-courses">
@@ -72,8 +65,26 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Submit" class="button" />
+                <a href="#" id="btn_link_course" class="url <?php echo true ? "" : "hidden" ?>" onclick="showDialog();">Enroll new course</a> |
+                <a href="<?php echo APP_DOMAIN; ?>students/manage" class="url">Go to list</a>
+            </td>
+        </tr>
     </table>
 </form>
+<div id="link_course"></div>
 <?php
     echo $gen->getJavascriptRef('js/student.js')
 ?>
+<script>
+    function showDialog() {
+        $('#link_course').load('<?php echo WEBROOT . "student/createcourse"; ?>',
+            function() {
+                $("#student_uuid").val($("#uuid").val());
+                dialogHandler('Enrol new course', $('#link_course'), linkCourses, null, 300, null, true, false, false);
+            });
+
+    }
+</script>
