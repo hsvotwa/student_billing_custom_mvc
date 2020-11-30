@@ -15,6 +15,15 @@ label {
     font-style: italic
 }
 
+
+/* input[aria-invalid='false'] {
+    border: 3px solid green;
+} */
+
+input[aria-invalid='true'] {
+    border: 1px solid red;
+}
+
 .label_chkbox,
 .label_chkbox_via_grp {
     font-family: Lato, arial;

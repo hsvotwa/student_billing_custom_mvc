@@ -7,7 +7,9 @@ $(function() {
             return false;
         },
         rules: getAllFields(),
-        highlight: function(element, errorClass, validClass) {},
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass("input-validation-error");
+        },
         unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass("input-validation-error");
         }
@@ -20,7 +22,6 @@ $(function() {
         }
     });
 });
-
 
 function linkSubjects() {
     var validatorCourse = $("#frm_link_subject").validate({
